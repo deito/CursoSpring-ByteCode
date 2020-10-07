@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.bytecode.core.configuration.Paginas;
 import com.bytecode.core.model.Post;
 
 @Controller
@@ -27,7 +29,14 @@ public class ControllerBasic {
 
 	@GetMapping(path = {"/post","/"})
 	public String saludar(Model model) {
-		model.addAttribute("posts", getPosts());
+		model.addAttribute("posts", this.getPosts());
 		return "index";
+	}
+	
+	@GetMapping(path="/public")
+	public ModelAndView post() {
+		ModelAndView modelAndView = new ModelAndView(Paginas.HOME);
+		modelAndView.addObject("posts", this.getPosts());
+		return modelAndView;
 	}
 }
